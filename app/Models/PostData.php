@@ -12,12 +12,29 @@ class PostData extends Model
     /** @use HasFactory<\Database\Factories\PostDataFactory> */
     use HasFactory, SoftDeletes;
 
+    protected const PLATEFORM = [
+        'instagram', 
+        'facebook', 
+        'linkedin'
+    ];
+
+    protected const STATUS = [
+        'draft', 
+        'scheduled', 
+        'published'
+    ];
+
     protected $fillable = [
         'title',
         'content',
         'platform',
         'status',
         'scheduled_at'
+    ];
+
+    protected $casts = [
+        'scheduled_at' => 'datetime:Y-m-d H:i:s',
+        'created_at' => 'datetime:Y-m-d H:i:s'
     ];
 
     protected $hidden = [

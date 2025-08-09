@@ -14,9 +14,10 @@ class PostDataController extends Controller
      */
     public function index()
     {
-        $all_posts = PostData::all();
-        // $all_posts_collections = PostDataCollection::collection($all_posts);
-        return view('welcome', ['all_posts' => $all_posts]);
+        $all_posts = PostData::orderBy('created_at')->get();
+        return response()->json([
+            'all_posts' => $all_posts,
+        ]);
     }
 
     /**
@@ -32,14 +33,6 @@ class PostDataController extends Controller
      */
     public function store(StorePostDataRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'platform' => 'required',
-            'status' => 'required',
-            'scheduled_at' => 'required'
-        ]);
-
         $store_post_data = PostData::create([
             'title' => $request->title,
             'content' => $request->content,
@@ -48,23 +41,37 @@ class PostDataController extends Controller
             'scheduled_at' => $request->scheduled_at,
         ]);
 
+        $msg = 'Post created Successfully';
+
+        if(!$store_post_data){
+            $msg = 'There is something error';
+        }
+        
         return response()->json([
-            'success' => 'Post created Successfully'
+            'success' => $msg
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PostData $postData)
+    public function show($postId)
     {
-        return $postData;
+        $post = PostData::find($postId);
+        
+        if (!$post) {
+            return response()->json([
+                'error' => 'Post not found'
+            ], 404);
+        }
+
+        return $post;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PostData $postData)
+    public function edit(PostData $postId)
     {
         //
     }
@@ -72,17 +79,15 @@ class PostDataController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostDataRequest $request, PostData $postData)
+    public function update(UpdatePostDataRequest $request, $postId)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'platform' => 'required',
-            'status' => 'required',
-            'scheduled_at' => 'required'
-        ]);
-
-        $store_post_data = $postData->update([
+        $post = PostData::find($postId);
+        if (!$post) {
+            return response()->json([
+                'error' => 'Post not found'
+            ], 404);
+        }
+        $update_post_data = $post->update([
             'title' => $request->title,
             'content' => $request->content,
             'platform' => $request->platform,
@@ -90,20 +95,41 @@ class PostDataController extends Controller
             'scheduled_at' => $request->scheduled_at,
         ]);
 
+        $msg = 'Post updated Successfully';
+
+        if(!$update_post_data){
+            $msg = 'There is something error';
+        }
+        
         return response()->json([
-            'success' => 'Post updated Successfully'
+            'success' => $msg
         ]);
+   
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostData $postData)
+    public function destroy($postId)
     {
-        $postData->delete();
+        $post = PostData::find($postId);
+        
+        if (!$post) {
+            return response()->json([
+                'error' => 'Post not found'
+            ], 404);
+        }
+
+        $delete_post_data = $post->delete();
+        
+        $msg = 'Post updated Successfully';
+
+        if(!$delete_post_data){
+            $msg = 'There is something error';
+        }
         
         return response()->json([
-            'success' => 'Post deleted Successfully'
+            'success' => $msg
         ]);
     }
 }

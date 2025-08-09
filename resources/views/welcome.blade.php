@@ -21,16 +21,7 @@
             <button class="btn btn-primary">New Post</button>
         </div>
         <div class="row">
-            @foreach($all_posts as $post)
-            <div class="card col-4">
-                <div class="card-body">
-                    <h5 class="card-title">{{$post->title}}</h5>
-                    <p class="card-text">{{$post->content}}</p>
-                    <span class="card-link">{{$post->platform}}</span>
-                    <span class="card-link">{{$post->status}}</span>
-                </div>
-            </div>
-            @endforeach
+            
         </div>
     </body>
 </html>

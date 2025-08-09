@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePostDataRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdatePostDataRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,17 @@ class UpdatePostDataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'platform' => [
+                'required',
+                Rule::in(['instagram', 'facebook', 'linkedin']),
+            ],
+            'status' => [
+                'required',
+                Rule::in(['draft', 'scheduled', 'published']),
+            ],
+            'scheduled_at' => 'required|date'
         ];
     }
 }
