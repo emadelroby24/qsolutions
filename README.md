@@ -14,19 +14,19 @@
 
 ### Task file structure
 
-####├── app
-####|──|──Http
-####|──|──|──Controllers
-####|──|──|──|──PostDataController.php
-####|──|──|──Requests
-####|──|──|──|──StorePostDataRequest.php
-####|──|──|──|──UpdatePostDataRequest.php
-####|──|──Models
-####|──|──|──PostData.php
-####├── database
-####|──|──migrations
-####|──|──|──2025_08_04_212024_create_post_data_table.php
-####|──routes
-####|──|──api.php
-####|── .env
-####|── README.md
+#### ├── app
+#### |──|──Http
+#### |──|──|──Controllers
+#### |──|──|──|──PostDataController.php
+#### |──|──|──Requests
+#### |──|──|──|──StorePostDataRequest.php
+#### |──|──|──|──UpdatePostDataRequest.php
+#### |──|──Models
+#### |──|──|──PostData.php
+#### ├── database
+#### |──|──migrations
+#### |──|──|──2025_08_04_212024_create_post_data_table.php
+#### |──routes
+#### |──|──api.php
+#### |── .env
+#### |── README.md
